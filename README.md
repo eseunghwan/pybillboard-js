@@ -5,7 +5,6 @@
 
 simple python wrapper for naver billboard.js
 
-<!--[![billboard.js](https://naver.github.io/billboard.js/img/logo/billboard.js.svg)](https://github.com/naver/billboard.js)-->
 [<img src="https://naver.github.io/billboard.js/img/logo/billboard.js.svg" width="350" alt="billboard.js">](https://github.com/naver/billboard.js)
 
 ## Install
