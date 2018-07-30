@@ -50,7 +50,7 @@ MultipleType
 
 
 ## Demo
-You can find demo on [demo](/demo)
+You can find demo on [demo](https://github.com/eseunghwan/pybillboard_js/demo)
 
 ## Bug report and Q&A
-If you find bugs or have questions, please notice [issues](/issues) on Github
+If you find bugs or have questions, please notice [issues](https://github.com/eseunghwan/pybillboard_js/issues) on Github
