@@ -1,7 +1,12 @@
 # -*- coding: UTF-8 -*-
-import os, sys; demo_dir = os.path.dirname(os.path.abspath(__file__)); import_dir = os.path.dirname(demo_dir)
+import os, sys; demo_dir = os.path.dirname(os.path.abspath(__file__))
 import pandas as pd
-sys.path.append(import_dir); from pybillboard_js.billboarder import *
+
+try:
+    from pybillboard_js.billboarder import *
+except ImportError:
+    sys.path.append(os.path.dirname(demo_dir))
+    from pybillboard_js.billboarder import *
 
 tbl_source = pd.DataFrame([[1, 2], [3, 4], [5, 6]], columns = ["A", "B"])
 tbl_source_range = pd.DataFrame([[[0, 1, 2], [1, 2, 3]], [[2, 3, 4], [3, 4, 5]], [[4, 5, 6], [5, 6, 7]]], columns = ["A", "B"])
