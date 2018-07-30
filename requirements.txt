@@ -1,0 +1,4 @@
+wget
+lxml
+tinydb
+shutil

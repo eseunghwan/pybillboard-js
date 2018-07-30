@@ -1,0 +1,9 @@
+{
+    "config": {
+        "1": {
+            "NAME": "UPDATE_RES",
+            "VALUE": false,
+            "RMRK": ""
+        }
+    }
+}
