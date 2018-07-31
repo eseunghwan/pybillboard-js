@@ -9,8 +9,6 @@ simple python wrapper for naver billboard.js
 
 ## Install
 ```
-pip3 install pybillboard-js
-or
 python3 -m pip install pybillboard-js
 ```
 
