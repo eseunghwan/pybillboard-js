@@ -9,6 +9,8 @@ simple python wrapper for naver billboard.js
 
 ## Install
 ```
+pip3 install pybillboard-js
+or
 python3 -m pip install pybillboard-js
 ```
 
@@ -28,23 +30,111 @@ line_chart.export(some_path)           <- export render() result to destination 
 ### update chart data or options
 ```
 line_chart.dataframe = some_other_dataframe
-line_chart.update()                   <- returns result like generate chart
+line_chart.update(return_class = True)        <- returns result like generate chart
 ```
 
 ##### or simply use all scripts at once
 ```
-Line(some_dataframe).update("dataframe", some_other_dataframe).export(some_path)
+Line(some_dataframe).update("dataframe", some_other_dataframe, True).export(some_path)
 ```
 
 ## Available Chart Types
 ### simple chart types
-Line, Area, Bar, Scatter, Pie, Bubble
+##### Line
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Line.png">
+```
+Line(some_dataframe).export(some_path)
+```
+##### Area
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Area.png">
+```
+Area(some_dataframe).export(some_path)
+```
+##### Bar
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Bar.png">
+```
+Bar(some_dataframe).export(some_path)
+```
+##### Scatter
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Scatter.png">
+```
+Scatter(some_dataframe).export(some_path)
+```
+##### Pie
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Pie.png">
+```
+Pie(some_dataframe).export(some_path)
+```
+##### Bubble
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Bubble.png">
+```
+Bubble(some_dataframe).export(some_path)
+```
+
+### stacked charts
+##### Area Stack
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Area_stack.png">
+```
+Area(some_dataframe, stack = True).export(some_path)
+```
+##### Bar Stack
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Bar_stack.png">
+```
+Bar(some_dataframe, stack = True).export(some_path)
+```
 
 ### advanced chart types
-SpLine, AreaSpLine, Step, AreaStep, AreaRange, Donut, Gauge, Radar
+##### SpLine
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/SpLine.png">
+```
+SpLine(some_dataframe).export(some_path)
+```
+##### AreaSpLine
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/AreaSpLine.png">
+```
+AreaSpLine(some_dataframe).export(some_path)
+```
+##### Step
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Step.png">
+```
+Step(some_dataframe).export(some_path)
+```
+##### AreaStep
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/AreaStep.png">
+```
+AreaStep(some_dataframe).export(some_path)
+```
+##### AreaLineRange
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/AreaLineRange.png">
+```
+AreaLineRange(some_dataframe).export(some_path)
+```
+##### AreaSpLineRange
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/AreaSpLineRange.png">
+```
+AreaSpLineRange(some_dataframe).export(some_path)
+```
+##### Donut
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Donut.png">
+```
+Donut(some_dataframe).export(some_path)
+```
+##### Gauge
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Gauge.png">
+```
+Gauge(some_dataframe).export(some_path)
+```
+##### Radar
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/Radar.png">
+```
+Radar(some_dataframe).export(some_path)
+```
 
 ### and multiple combination
-MultipleType
+<img src="https://github.com/eseunghwan/pybillboard-js/tree/master/demo/images/MultipleType.png">
+```
+MultipleType(some_dataframe, dictionary_style_type_info).export(some_path)
+```
 
 
 ## Demo
