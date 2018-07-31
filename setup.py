@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "pybillboard_js",
-    version = "0.1.0.alpha6",
+    version = "0.1.0.alpha7",
     author = "eseunghwan",
     author_email = "shlee0290@naver.com",
     license = "MIT",
@@ -14,5 +14,5 @@ setup(
     include_package_data = True,
     python_requires = ">=3.6",
     install_requires = [mname.strip() for mname in open("requirements.txt", "r", encoding = "utf-8").read().strip().split("\n")],
-    url = "https://github.com/eseunghwan/pybillboard_js"
+    url = "https://github.com/eseunghwan/pybillboard-js"
 )

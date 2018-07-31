@@ -1,3 +1,5 @@
 wget
 lxml
 tinydb
+pandas
+numpy

@@ -37,3 +37,35 @@ def get_js_text(category):
         source_text = source_read.read()
 
     return source_text
+
+# function get_raw_type
+def get_raw_type(pybillboard_chart_type):
+    chart_type_info = {
+        "Line": "line",
+        "Area": "area",
+        "Bar": "bar",
+        "Scatter": "scatter",
+        "Pie": "pie",
+        "Bubble": "bubble",
+        "SpLine": "spline",
+        "AreaSpLine": "area-spline",
+        "Step": "step",
+        "AreaStep": "area-step",
+        "AreaLineRange": "area-line-range",
+        "AreaSpLineRange": "area-spline-range",
+        "Donut": "donut",
+        "Gauge": "gauge",
+        "Radar": "radar"
+    }
+
+    if pybillboard_chart_type in chart_type_info.keys():
+        return chart_type_info[pybillboard_chart_type]
+    else:
+        from .exceptions import ChartTypeError
+        raise ChartTypeError("invalid chart type: {0}".format(pybillboard_chart_type))
+
+# function get_df_dimension
+def get_df_dimension(dataframe):
+    import numpy as np
+    
+    return len(np.array(dataframe.values.tolist()).shape)

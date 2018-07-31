@@ -2,7 +2,7 @@
     "config": {
         "1": {
             "NAME": "UPDATE_RES",
-            "VALUE": true,
+            "VALUE": false,
             "RMRK": ""
         }
     }

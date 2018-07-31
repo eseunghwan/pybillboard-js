@@ -1,77 +1,96 @@
 # -*- coding: UTF-8 -*-
+import pandas as pd
 from .prototypes import Chart
+from .functions import get_df_dimension
 
 ### single type charts
 ## default chart types
 # line chart
 class Line(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("line", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
-# area chart
+# area chart(stacked)
 class Area(Chart):
     def __init__(self, dataframe, options = {}, include_res = True, stack = False):
-        super().__init__("area", dataframe, options, include_res, stack = stack)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res, stack = stack)
 
-# bar chart
+# bar chart(stacked)
 class Bar(Chart):
     def __init__(self, dataframe, options = {}, include_res = True, stack = False):
-        super().__init__("bar", dataframe, options, include_res, stack = stack)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res, stack = stack)
 
 # scatter chart
 class Scatter(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("scatter", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 # pie chart
 class Pie(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("pie", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 # bubble chart
 class Bubble(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("bubble", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 
 ## advanced chart types
 # spline style
 class SpLine(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("spline", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 class AreaSpLine(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("area-spline", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 # step style
 class Step(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("step", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 class AreaStep(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("area-step", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 # area range
-class AreaRange(Chart):
+class AreaLineRange(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("area-line-range", dataframe, options, include_res)
+        new_dataframe = pd.DataFrame()
+        if get_df_dimension(dataframe) < 3:
+            for col in dataframe.columns:
+                new_dataframe[col] = [[value - 1, value, value + 1] if not isinstance(value, str) and str(value).isdigit() else ["", value, ""] for value in dataframe[col].values]
+
+        super().__init__(self.__class__.__name__, new_dataframe, options, include_res)
+
+class AreaSpLineRange(Chart):
+    def __init__(self, dataframe, options = {}, include_res = True):
+        new_dataframe = pd.DataFrame()
+        if get_df_dimension(dataframe) < 3:
+            for col in dataframe.columns:
+                new_dataframe[col] = [[value - 1, value, value + 1] if not isinstance(value, str) and str(value).isdigit() else ["", value, ""] for value in dataframe[col].values]
+
+        super().__init__(self.__class__.__name__, new_dataframe, options, include_res)
 
 # dounut
 class Donut(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("donut", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 # gauge
 class Gauge(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("gauge", dataframe[dataframe.columns[0]].to_frame() if len(dataframe.columns) > 1 else dataframe, options, include_res)
+        if len(dataframe.columns) > 1:
+            dataframe = dataframe[dataframe.columns[0]].to_frame()
+
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 # radar
 class Radar(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        super().__init__("radar", dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, dataframe, options, include_res)
 
 
 ## multiple(combination) chart

@@ -8,7 +8,8 @@ class Chart():
         self.options, self.include_res = options, include_res
         for key in kwargs.keys():
             exec("self.{0} = kwargs[key]".format(key))
-            
+
+        from .functions import get_raw_type
         self.generate()
 
     def __str__(self):
@@ -20,19 +21,21 @@ class Chart():
     
     def generate(self):
         from lxml.html import builder as lxhtml
-        from .functions import get_js_text
+        from .functions import get_js_text, get_raw_type
 
         self._data = {"columns": []}
 
         if isinstance(self.chart_type, dict):
-            self._data["types"] = self.chart_type
-            self._class = "MultipleType"
+            self._data["types"] = {key: get_raw_type(value) for key, value in self.chart_type.items()}
+            self._class = "MultipleType_{0}".format("_".join(list(self._data["types"].values())))
         elif isinstance(self.chart_type, str):
-            self._data["type"] = self.chart_type
-            self._class = self.chart_type
+            self._data["type"] = get_raw_type(self.chart_type)
+            self._class = self._data["type"]
         else:
             from .exceptions import ChartTypeError
             raise ChartTypeError("invalid type format: {0}".format(self.chart_type))
+
+        self.raw_type = self._class
 
         if "x" in self.options.keys():
             self._data["x"] = options["x"]
