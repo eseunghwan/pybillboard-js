@@ -1,4 +1,3 @@
 wget
 lxml
 tinydb
-shutil
