@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
 from .logger import Logger
-from .functions import get_config, get_raw_type
+from .functions import get_js_text, get_raw_type
 from .exceptions import ChartTypeError, ExportFormatError
 # import pandas
 import pandas as pd
@@ -50,41 +50,24 @@ class Chart():
             self._data["columns"].append([col] + self.dataframe[col].values.tolist())
 
         self._root = lxhtml.DIV(
-            lxhtml.DIV(id = self._id),
             lxhtml.CLASS("billboard-{0}".format(self.raw_type)),
             style = "padding: 10px;"
         )
 
-        script_text = ""
         if self.include_res:
-            self._root.append(lxhtml.SCRIPT(get_config("billboard-js"), id = "{0}-js".format(self._id)))
-            self._root.append(lxhtml.STYLE(get_config("billboard-css"), id = "{0}-css".format(self._id)))
+            self._root.append(lxhtml.SCRIPT(get_js_text("billboard-js"), type = "text/javascript"))
+            self._root.append(lxhtml.STYLE(get_js_text("billboard-css")))
 
-            script_text += """
-if (document.getElementById("billboard-js") == null && document.getElementById("billboard-css") == null) {
-    var billboard_js = document.createElement("script"), billboard_css = document.createElement("style");
-    billboard_js.id = "billboard-js", billboard_css.id = "billboard-css";
-
-    billboard_js.appendChild(document.createTextNode(document.getElementById("%(js_id)s").text));
-    billboard_css.appendChild(document.createTextNode(document.getElementById("%(css_id)s").innerText));
-
-    document.getElementById("%(js_id)s").remove();
-    document.getElementById("%(css_id)s").remove();
-
-    document.head.appendChild(billboard_js);
-    document.head.appendChild(billboard_css);
-}
-""" % {"js_id": "{0}-js".format(self._id), "css_id": "{0}-css".format(self._id)}
-
-        script_text += """
+        self._root.append(lxhtml.DIV(id = self._id))
+        self._root.append(
+            lxhtml.SCRIPT("""
 bb.generate({
     bindto: "#%s",
     data: %s,
     %s
 });
-""" % (self._id, self._data, ",\n".join(["'{0}': {1}".format(key, value) for key, value in self.options.items()]))
-
-        self._root.append(lxhtml.SCRIPT(script_text, type = "text/javascript", id = "{0}-script".format(self._id), onload = "eval(this.text);"))
+""" % (self._id, self._data, ",\n".join(["'{0}': {1}".format(key, value) for key, value in self.options.items()])), type = "text/javascript")
+        )
 
         Logger.info("Generated Chart {0}".format(self.raw_type))
 
@@ -107,11 +90,10 @@ bb.generate({
         if file_path == None:
             file_path = "{0}.html".format(self.raw_type)
 
-        file_path = os.path.abspath(file_path)
-        file_format = os.path.splitext(file_path)[-1][1:]
+        file_pname, file_format = os.path.splitext(file_path)
 
         if file_format in ["html"]:
-            with open(file_path, "w", encoding = "utf-8") as export_write:
+            with open(os.path.join(file_pname, file_format), "w", encoding = "utf-8") as export_write:
                 if file_format == "html":
                     Logger.info("Export to {0}".format(os.path.basename(file_path)))
                 else:
@@ -119,6 +101,6 @@ bb.generate({
 
                 export_write.write(self.__str__())
         else:
-            raise ExportFormatError("Invalid export file format: {0}".format(file_format))
+            ExportFormatError("Invalid export file format: {0}".format(file_format))
 
         

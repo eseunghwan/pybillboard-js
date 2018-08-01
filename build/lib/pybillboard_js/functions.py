@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # import os
-import os, sys; module_dir = os.path.dirname(os.path.abspath(__file__))
+import os; module_dir = os.path.dirname(os.path.abspath(__file__))
 # import config
 from . import config, query
 # import logger
@@ -8,37 +8,35 @@ from .logger import Logger
 
 # function update_res
 def update_res():
-    import requests
+    import wget
+
+    if os.path.exists(os.path.join(module_dir, "res", "billboard.js")):
+        os.remove(os.path.join(module_dir, "res", "billboard.js"))
+
+    if os.path.exists(os.path.join(module_dir, "res", "billboard.css")):
+        os.remove(os.path.join(module_dir, "res", "billboard.css"))
     
     Logger.info("Update resources")
-    # get text of  billboard.min.js/css
-    billboard_min_text = {
-        "js": requests.get("https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js").text,
-        "css": requests.get("https://naver.github.io/billboard.js/release/latest/dist/billboard.min.css").text
-    }
+    # download billboard.min.js
+    wget.download("https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js", os.path.join(module_dir, "res", "billboard.js"))
 
-    if config.search(query.NAME == "billboard-js") == []:
-        config.insert({"NAME": "billboard-js", "VALUE": billboard_min_text["js"]})
-    else:
-        config.update({"VALUE": billboard_min_text["js"]}, query.NAME == "billboard-js")
-
-    if config.search(query.NAME == "billboard-css") == []:
-        config.insert({"NAME": "billboard-css", "VALUE": billboard_min_text["css"]})
-    else:
-        config.update({"VALUE": billboard_min_text["css"]}, query.NAME == "billboard-css")
+    # download billboard.min.css
+    wget.download("https://naver.github.io/billboard.js/release/latest/dist/billboard.min.css", os.path.join(module_dir, "res", "billboard.css"))
 
     # change update_res to false
     config.update({"VALUE": False}, query.NAME == "UPDATE_RES")
 
-    sys.stdout.write("\n")# write next-line for repl
+# function get_js_text
+def get_js_text(category):
+    if category == "billboard-js":
+        source_path = os.path.join(module_dir, "res", "billboard.js")
+    elif category == "billboard-css":
+        source_path = os.path.join(module_dir, "res", "billboard.css")
 
-# function get_config
-def get_config(conf_name):
-    try:
-        return config.search(query.NAME == conf_name)[0]["VALUE"]
-    except IndexError:
-        from .exceptions import ConfigNotExistsError
-        raise ConfigNotExistsError("{0} not exists!".format(conf_name))
+    with open(source_path, "r", encoding = "utf-8") as source_read:
+        source_text = source_read.read()
+
+    return source_text
 
 # function get_raw_type
 def get_raw_type(pybillboard_chart_type):

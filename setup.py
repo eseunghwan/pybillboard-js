@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "pybillboard_js",
-    version = "0.1.0.alpha7-20180801",
+    version = "0.1.0.alpha8",
     author = "eseunghwan",
     author_email = "shlee0290@naver.com",
     license = "MIT",

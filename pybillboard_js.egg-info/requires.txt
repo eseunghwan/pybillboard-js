@@ -1,4 +1,4 @@
-requests
+wget
 lxml
 tinydb
 pandas
