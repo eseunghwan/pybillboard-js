@@ -30,12 +30,12 @@ line_chart.export(some_path)           <- export render() result to destination 
 ### update chart data or options
 ```
 line_chart.dataframe = some_other_dataframe
-line_chart.update(return_class = True)        <- returns result like generate chart
+line_chart.update()        <- returns result like generate chart
 ```
 
 ##### or simply use all scripts at once
 ```
-Line(some_dataframe).update("dataframe", some_other_dataframe, True).export(some_path)
+Line(some_dataframe).update("dataframe", some_other_dataframe).export(some_path)
 ```
 
 ## Available Chart Types

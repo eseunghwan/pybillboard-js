@@ -6,6 +6,7 @@ from tinydb import TinyDB, Query
 from .logger import Logger
 
 if not os.path.exists(os.path.join(module_dir, "res")):
+    Logger.info("Proceeding First Step")
     os.mkdir(os.path.join(module_dir, "res"))
     TinyDB(os.path.join(module_dir, "res", "config.db"), default_table = "config", indent = 4).insert({"NAME": "UPDATE_RES", "VALUE": True})
 
