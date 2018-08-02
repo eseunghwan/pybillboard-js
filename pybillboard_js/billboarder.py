@@ -2,6 +2,7 @@
 import pandas as pd
 from .prototypes import Chart
 from .functions import get_df_dimension
+from copy import deepcopy
 
 ### single type charts
 ## default chart types
@@ -62,6 +63,8 @@ class AreaLineRange(Chart):
         if get_df_dimension(dataframe) < 3:
             for col in dataframe.columns:
                 new_dataframe[col] = [[value - 1, value, value + 1] if not isinstance(value, str) and str(value).isdigit() else ["", value, ""] for value in dataframe[col].values]
+        else:
+            new_dataframe = deepcopy(dataframe)
 
         super().__init__(self.__class__.__name__, new_dataframe, options, include_res)
 
@@ -71,6 +74,8 @@ class AreaSpLineRange(Chart):
         if get_df_dimension(dataframe) < 3:
             for col in dataframe.columns:
                 new_dataframe[col] = [[value - 1, value, value + 1] if not isinstance(value, str) and str(value).isdigit() else ["", value, ""] for value in dataframe[col].values]
+        else:
+            new_dataframe = deepcopy(dataframe)
 
         super().__init__(self.__class__.__name__, new_dataframe, options, include_res)
 
@@ -82,10 +87,12 @@ class Donut(Chart):
 # gauge
 class Gauge(Chart):
     def __init__(self, dataframe, options = {}, include_res = True):
-        if len(dataframe.columns) > 1:
-            dataframe = dataframe[dataframe.columns[0]].to_frame()
+        new_dataframe = pd.DataFrame(
+            [dataframe[dataframe.columns[0]].map(float).describe()["mean"]],
+            columns = [dataframe.columns[0]]
+        )
 
-        super().__init__(self.__class__.__name__, dataframe, options, include_res)
+        super().__init__(self.__class__.__name__, new_dataframe, options, include_res)
 
 # radar
 class Radar(Chart):

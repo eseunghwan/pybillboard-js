@@ -68,12 +68,12 @@ if (document.getElementById("billboard-js") == null && document.getElementById("
     billboard_js.appendChild(document.createTextNode(document.getElementById("%(js_id)s").text));
     billboard_css.appendChild(document.createTextNode(document.getElementById("%(css_id)s").innerText));
 
-    document.getElementById("%(js_id)s").remove();
-    document.getElementById("%(css_id)s").remove();
-
     document.head.appendChild(billboard_js);
     document.head.appendChild(billboard_css);
 }
+
+document.getElementById("%(js_id)s").remove();
+document.getElementById("%(css_id)s").remove();
 """ % {"js_id": "{0}-js".format(self._id), "css_id": "{0}-css".format(self._id)}
 
         script_text += """
